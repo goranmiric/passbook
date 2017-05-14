@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: passbook_thumbnail_2x
+label: 'Passbook Thumbnail@2x'
+effects:
+  c1161a0e-b066-4f9c-8dfb-094ec5a161cb:
+    uuid: c1161a0e-b066-4f9c-8dfb-094ec5a161cb
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 180
+      height: 180

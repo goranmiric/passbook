@@ -1,0 +1,17 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - passbook
+id: passbook.barcode
+field_name: barcode
+entity_type: passbook
+type: passbook_barcode
+settings: {  }
+module: passbook
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

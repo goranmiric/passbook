@@ -1,0 +1,10 @@
+entity.passbook.edit_form:
+  route_name: entity.passbook.edit_form
+  group: passbook
+  title: Edit
+
+entity.passbook.delete_form:
+  route_name: entity.passbook.delete_form
+  group: passbook
+  title: Delete
+  weight: 10

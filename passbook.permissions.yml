@@ -1,0 +1,34 @@
+administer passbook configuration:
+  title: 'Administer Passbook configuration'
+
+bypass passbook access:
+  title: 'Bypass passbook access control'
+  description: 'View, edit and delete all content regardless of permission restrictions.'
+  restrict access: true
+
+administer passbook types:
+  title: 'Administer passbook types'
+  restrict access: true
+
+administer passbooks:
+  title: 'Administer passbooks'
+  description: 'Promote, change ownership, edit revisions, and perform other tasks across all passbook types.'
+  restrict access: true
+
+access passbook overview:
+  title: 'Access the passbook overview page'
+
+access passbook:
+  title: 'View published passbook'
+
+view all revisions:
+  title: 'View all revisions'
+
+revert all revisions:
+  title: 'Revert all revisions'
+
+delete all revisions:
+  title: 'Delete all revisions'
+
+permission_callbacks:
+  - \Drupal\passbook\PassbookPermissions::passbookTypePermissions

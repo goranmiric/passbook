@@ -1,0 +1,84 @@
+<?php
+
+/**
+ * @file
+ * Passbook module file.
+ */
+use Drupal\Core\Render\Element;
+
+/**
+ * Implements hook_theme().
+ */
+function passbook_theme() {
+  return [
+    'passbook' => [
+      'render element' => 'passbook',
+    ],
+    'passbook_add_list' => [
+      'variables' => ['content' => NULL],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function passbook_theme_suggestions_passbook(array $variables) {
+  $suggestions = [];
+
+  $passbook = $variables['passbook']['#passbook'];
+  $sanitized_view_mode = strtr($variables['passbook']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'passbook__' . $sanitized_view_mode;
+  $suggestions[] = 'passbook__' . $passbook->bundle();
+  $suggestions[] = 'passbook__' . $passbook->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'passbook__' . $passbook->id();
+  $suggestions[] = 'passbook__' . $passbook->id() . '__' . $sanitized_view_mode;
+
+  return $suggestions;
+}
+
+/**
+ * Prepares variables for list of available passbook type templates.
+ *
+ * Default template: passbook-add-list.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - content: An array of content types.
+ */
+function template_preprocess_passbook_add_list(&$variables) {
+  $variables['types'] = [];
+  if (!empty($variables['content'])) {
+    foreach ($variables['content'] as $type) {
+      $variables['types'][$type->id()] = [
+        'label' => $type->label(),
+        'url' => \Drupal::url('passbook.add', ['passbook_type' => $type->id()]),
+        'description' => [
+          '#markup' => $type->getDescription(),
+        ],
+      ];
+    }
+  }
+}
+
+/**
+ * Prepares variables for node templates.
+ *
+ * Default template: passbook.html.twig.
+ *
+ * @param array $variables
+ *   An associative array.
+ */
+function template_preprocess_passbook(&$variables) {
+
+  // Helpful $content variable for templates.
+  $variables += ['content' => []];
+  foreach (Element::children($variables['passbook']) as $key) {
+    $variables['content'][$key] = $variables['passbook'][$key];
+  }
+
+  $url = file_create_url($variables['passbook']['#passbook']->pass_file_path->getString());
+  $variables['content']['pass_file_path']['#markup'] = '<img src="https://chart.googleapis.com/chart?chs=200x200&cht=qr&chl=' . $url . '&choe=UTF-8" title="QR" />';
+  $variables['content']['pass_file_path']['#markup'] .= '<p><a href="' . $url .'">Download</a></p>';
+}

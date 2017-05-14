@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - passbook
+    - text
+id: passbook.member_name
+field_name: member_name
+entity_type: passbook
+type: passbook_text
+settings: {  }
+module: passbook
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,124 @@
+passbook.config:
+  path: '/admin/config/passbook'
+  defaults:
+    _controller: '\Drupal\system\Controller\SystemController::systemAdminMenuBlockPage'
+    _title: 'Passbook'
+  requirements:
+    _permission: 'access administration pages'
+
+passbook.settings:
+  path: '/admin/config/passbook/passbook-settings'
+  defaults:
+    _form: 'Drupal\passbook\Form\PassbookSettingsForm'
+    _title: 'Passbook Settings'
+  requirements:
+    _permission: 'administer passbook configuration'
+
+# TODO: Add preview route.
+passbook.add_page:
+  path: '/passbook/add'
+  defaults:
+    _title: 'Add passbook'
+    _controller: '\Drupal\passbook\Controller\PassbookController::addPage'
+  options:
+    _passbook_operation_route: TRUE
+  requirements:
+    _passbook_add_access: 'passbook'
+
+passbook.add:
+  path: '/passbook/add/{passbook_type}'
+  defaults:
+    _controller: '\Drupal\passbook\Controller\PassbookController::add'
+    _title_callback: '\Drupal\passbook\Controller\PassbookController::addPageTitle'
+  requirements:
+    _passbook_add_access: 'passbook:{passbook_type}'
+  options:
+    _passbook_operation_route: TRUE
+    parameters:
+      passbook_type:
+        with_config_overrides: TRUE
+
+entity.passbook.version_history:
+  path: '/passbook/{passbook}/revisions'
+  defaults:
+    _title: 'Revisions'
+    _controller: '\Drupal\passbook\Controller\PassbookController::revisionOverview'
+  requirements:
+    _access_passbook_revision: 'view'
+    passbook: \d+
+  options:
+    _passbook_operation_route: TRUE
+
+entity.passbook.revision:
+  path: '/passbook/{passbook}/revisions/{passbook_revision}/view'
+  defaults:
+    _controller: '\Drupal\passbook\Controller\PassbookController::revisionShow'
+    _title_callback: '\Drupal\passbook\Controller\PassbookController::revisionPageTitle'
+  requirements:
+    _access_passbook_revision: 'view'
+    passbook: \d+
+
+passbook.revision_revert_confirm:
+  path: '/passbook/{passbook}/revisions/{passbook_revision}/revert'
+  defaults:
+    _form: '\Drupal\passbook\Form\PassbookRevisionRevertForm'
+    _title: 'Revert to earlier revision'
+  requirements:
+    _access_passbook_revision: 'update'
+    passbook: \d+
+  options:
+    _passbook_operation_route: TRUE
+
+passbook.revision_revert_translation_confirm:
+  path: '/passbook/{passbook}/revisions/{passbook_revision}/revert/{langcode}'
+  defaults:
+    _form: '\Drupal\passbook\Form\PassbookRevisionRevertTranslationForm'
+    _title: 'Revert to earlier revision of a translation'
+  requirements:
+    _access_passbook_revision: 'update'
+    passbook: \d+
+  options:
+    _passbook_operation_route: TRUE
+
+passbook.revision_delete_confirm:
+  path: '/passbook/{passbook}/revisions/{passbook_revision}/delete'
+  defaults:
+    _form: '\Drupal\passbook\Form\PassbookRevisionDeleteForm'
+    _title: 'Delete earlier revision'
+  requirements:
+    _access_passbook_revision: 'delete'
+    passbook: \d+
+  options:
+    _passbook_operation_route: TRUE
+
+entity.passbook_type.collection:
+  path: '/admin/structure/passbook'
+  defaults:
+    _entity_list: 'passbook_type'
+    _title: 'Passbook types'
+  requirements:
+    _permission: 'administer passbook types'
+
+passbook.type_add:
+  path: '/admin/structure/passbook/add'
+  defaults:
+    _entity_form: 'passbook_type.add'
+    _title: 'Add passbook type'
+  requirements:
+    _permission: 'administer passbook types'
+
+entity.passbook_type.edit_form:
+  path: '/admin/structure/passbook/manage/{passbook_type}'
+  defaults:
+    _entity_form: 'passbook_type.edit'
+    _title_callback: '\Drupal\Core\Entity\Controller\EntityController::title'
+  requirements:
+    _permission: 'administer passbook types'
+
+entity.passbook_type.delete_form:
+  path: '/admin/structure/passbook/manage/{passbook_type}/delete'
+  defaults:
+    _entity_form: 'passbook_type.delete'
+    _title: 'Delete'
+  requirements:
+    _entity_access: 'passbook_type.delete'

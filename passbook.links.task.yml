@@ -1,0 +1,36 @@
+entity.passbook.collection:
+  route_name: entity.passbook.collection
+  title: 'Passbook'
+  base_route: system.admin_content
+
+entity.passbook.canonical:
+  route_name: entity.passbook.canonical
+  base_route: entity.passbook.canonical
+  title: 'View'
+
+entity.passbook.edit_form:
+  route_name: entity.passbook.edit_form
+  base_route: entity.passbook.canonical
+  title: Edit
+
+entity.passbook.delete_form:
+  route_name: entity.passbook.delete_form
+  base_route: entity.passbook.canonical
+  title: Delete
+  weight: 10
+
+entity.passbook.version_history:
+  route_name: entity.passbook.version_history
+  base_route: entity.passbook.canonical
+  title: 'Revisions'
+  weight: 20
+
+entity.passbook_type.edit_form:
+  title: 'Edit'
+  route_name: entity.passbook_type.edit_form
+  base_route: entity.passbook_type.edit_form
+
+entity.passbook_type.collection:
+  title: List
+  route_name: entity.passbook_type.collection
+  base_route: entity.passbook_type.collection

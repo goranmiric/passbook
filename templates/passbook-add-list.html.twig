@@ -1,0 +1,22 @@
+{#
+/**
+ * @file
+ * Default theme implementation to list passbook types available for adding content.
+ *
+ * @ingroup themeable
+ */
+#}
+{% if content %}
+  <ul class="admin-list">
+    {% for type in types %}
+      <li class="clearfix"><a href="{{ type.url }}"><span class="label">{{ type.label }}</span><div class="description">{{ type.description }}</div></a></li>
+    {% endfor %}
+  </ul>
+{% else %}
+  <p>
+    {% set create_entity = path('passbook.type_add') %}
+    {% trans %}
+      You have not created any content types yet. Go to the <a href="{{ create_entity }}">content type creation page</a> to add a new content type.
+    {% endtrans %}
+  </p>
+{% endif %}

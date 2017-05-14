@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies: {  }
+name: passbook_thumbnail
+label: 'Passbook Thumbnail'
+effects:
+  47bcc0fc-bc81-4d72-bf1c-c01750fd9b5b:
+    uuid: 47bcc0fc-bc81-4d72-bf1c-c01750fd9b5b
+    id: image_scale_and_crop
+    weight: 1
+    data:
+      width: 90
+      height: 90

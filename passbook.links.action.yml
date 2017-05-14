@@ -1,0 +1,11 @@
+passbook.type_add:
+  route_name: passbook.type_add
+  title: 'Add passbook type'
+  appears_on:
+    - entity.passbook_type.collection
+
+passbook.add_page:
+  route_name: passbook.add_page
+  title: 'Add passbook'
+  appears_on:
+    - entity.passbook.collection

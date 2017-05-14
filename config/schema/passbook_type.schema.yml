@@ -1,0 +1,33 @@
+passbook.settings:
+  type: config_object
+  label: 'Passbook settings'
+  mapping:
+    use_admin_theme:
+      type: boolean
+      label: 'Use administration theme when editing or creating passbook'
+
+passbook.type.*:
+  type: config_entity
+  label: 'Passbook type'
+  mapping:
+    label:
+      type: label
+      label: 'Name'
+    id:
+      type: string
+      label: 'Machine-readable name'
+    pass_type:
+      type: string
+      label: 'Passbook type (apple)'
+    description:
+      type: text
+      label: 'Description'
+    new_revision:
+      type: boolean
+      label: 'Whether a new revision should be created by default'
+    preview_mode:
+      type: integer
+      label: 'Preview before submitting'
+    display_submitted:
+      type: boolean
+      label: 'Display setting for author and date Submitted by post information'

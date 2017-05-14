@@ -1,0 +1,21 @@
+passbook.edit.form:
+  version: VERSION
+  js:
+    js/editForm.js: {}
+  dependencies:
+    - core/drupal.entity-form
+    - core/drupalSettings
+
+passbook.passbook_types:
+  version: VERSION
+  js:
+    js/types.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupal.form
+
+passbook.fields:
+  css:
+    theme:
+      css/passbook.fields.css: {}

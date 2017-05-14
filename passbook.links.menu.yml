@@ -1,0 +1,21 @@
+passbook.config:
+  title: 'Passbook'
+  parent: system.admin_config
+  route_name: passbook.config
+  weight: -10
+
+passbook.settings:
+  title: 'Passbook Settings'
+  parent: passbook.config
+  description: 'Configure passbook settings.'
+  route_name: passbook.settings
+
+entity.passbook_type.collection:
+  title: 'Passbook types'
+  parent: system.admin_structure
+  description: 'Create and manage fields, forms, and display settings.'
+  route_name: entity.passbook_type.collection
+
+passbook.add_page:
+  title: 'Add passbook'
+  route_name: passbook.add_page

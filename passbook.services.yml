@@ -1,0 +1,22 @@
+services:
+  access_check.passbook.add:
+    class: Drupal\passbook\Access\PassbookAddAccessCheck
+    arguments: ['@entity.manager']
+    tags:
+      - { name: access_check, applies_to: _passbook_add_access }
+
+  passbook.admin_path.route_subscriber:
+    class: Drupal\passbook\EventSubscriber\PassbookAdminRouteSubscriber
+    arguments: ['@config.factory']
+    tags:
+      - { name: event_subscriber }
+
+  access_check.passbook.revision:
+      class: Drupal\passbook\Access\PassbookRevisionAccessCheck
+      arguments: ['@entity.manager']
+      tags:
+        - { name: access_check, applies_to: _access_passbook_revision }
+
+  passbook.manager:
+    class: Drupal\passbook\Services\PassbookManager
+    arguments: ['@config.factory', '@entity_type.manager', '@file_system']
