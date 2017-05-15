@@ -8,6 +8,7 @@ use Drupal\Core\File\FileSystem;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Site\Settings;
 use Drupal\image\Entity\ImageStyle;
+use Drupal\passbook\Entity\PassbookType;
 use Passbook\Pass\Image;
 use Passbook\PassFactory;
 use Passbook\Pass\Field;
@@ -54,10 +55,6 @@ class PassbookManager {
     $this->fileSystem = $fileSystem;
   }
 
-  // TODO
-  // Passbook
-  // pass.com.dvb.solutions.com
-
   /**
    * Build pass object from entity.
    *
@@ -69,21 +66,18 @@ class PassbookManager {
    */
   public function buildPassFromEntity(EntityInterface $entity) {
     $fields = $entity->getPassbookFields();
+    $bundle = PassbookType::load($entity->bundle());
 
     $passTypeClass = '\Passbook\Type\\' . ucfirst($entity->getPassType());
     $pass = new $passTypeClass($entity->uuid(), $entity->label());
 
-    // TODO: move this to Passbook type entity.
     $pass->setFormatVersion(1);
-//    $pass->setAuthenticationToken('2ac79497345ae6c9c59b67af3dd4b818');
-//    $pass->setWebServiceURL('https://api.passdock.com');
-    $pass->setLogoText('FFW Membership');
-    $pass->setBackgroundColor('rgb(76,163,213)');
-    $pass->setForegroundColor('rgb(255,255,255)');
-    $pass->setLabelColor('rgb(179,228,255)');
-//    $pass->setExpirationDate( new \DateTime('now'));
-
-
+    // $pass->setAuthenticationToken('2ac79497345ae6c9c59b67af3dd4b818');
+    // $pass->setWebServiceURL('https://api.passdock.com');
+    $pass->setLogoText($bundle->label());
+    $pass->setBackgroundColor($bundle->backgroundColor());
+    $pass->setForegroundColor($bundle->foregroundColor());
+    $pass->setLabelColor($bundle->labelColor());
 
     // Create pass structure.
     $structure = new Structure();

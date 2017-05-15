@@ -19,6 +19,30 @@ interface PassbookTypeInterface extends ConfigEntityInterface, RevisionableEntit
   public function passType();
 
   /**
+   * Gets the background color.
+   *
+   * @return string
+   *   Color code.
+   */
+  public function backgroundColor();
+
+  /**
+   * Gets the foreground color.
+   *
+   * @return string
+   *   Color code.
+   */
+  public function foregroundColor();
+
+  /**
+   * Gets the label color.
+   *
+   * @return string
+   *   Color code.
+   */
+  public function labelColor();
+
+  /**
    * Determines whether the bundle is locked.
    *
    * @return string|false

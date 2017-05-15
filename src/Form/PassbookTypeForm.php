@@ -109,6 +109,35 @@ class PassbookTypeForm extends BundleEntityFormBase {
       ],
     ];
 
+    // Color settings.
+    $form['color'] = [
+      '#type' => 'details',
+      '#title' => t('Color settings'),
+      '#group' => 'additional_settings',
+      '#open' => TRUE,
+    ];
+
+    $form['color']['background_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Background color'),
+      '#required' => TRUE,
+      '#default_value' => $type->backgroundColor()?: '#ffffff',
+    ];
+
+    $form['color']['foreground_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Foreground color'),
+      '#required' => TRUE,
+      '#default_value' => $type->foregroundColor()?: '#000000',
+    ];
+
+    $form['color']['label_color'] = [
+      '#type' => 'color',
+      '#title' => $this->t('Label color'),
+      '#required' => TRUE,
+      '#default_value' => $type->labelColor()?: '#000000',
+    ];
+
     $form['submission'] = [
       '#type' => 'details',
       '#title' => t('Submission form settings'),
@@ -224,6 +253,9 @@ class PassbookTypeForm extends BundleEntityFormBase {
     $type->set('id', trim($type->id()));
     $type->set('label', trim($type->label()));
     $type->set('pass_type', $type->passType());
+    $type->set('background_color', $form_state->getValue(['background_color']));
+    $type->set('foreground_color', $form_state->getValue(['foreground_color']));
+    $type->set('label_color', $form_state->getValue(['label_color']));
 
     $status = $type->save();
 

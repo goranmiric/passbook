@@ -19,6 +19,15 @@ passbook.type.*:
     pass_type:
       type: string
       label: 'Passbook type (apple)'
+    background_color:
+      type: string
+      label: 'Background color'
+    foreground_color:
+      type: string
+      label: 'Foreground color'
+    label_color:
+      type: string
+      label: 'Label color'
     description:
       type: text
       label: 'Description'

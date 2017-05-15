@@ -37,6 +37,9 @@ use Drupal\Core\Entity\EntityStorageInterface;
  *     "label",
  *     "id",
  *     "pass_type",
+ *     "background_color",
+ *     "foreground_color",
+ *     "label_color",
  *     "description",
  *     "new_revision",
  *     "preview_mode",
@@ -66,6 +69,27 @@ class PassbookType extends ConfigEntityBundleBase implements PassbookTypeInterfa
    * @var string
    */
   protected $pass_type;
+
+  /**
+   * The background color.
+   *
+   * @var string
+   */
+  protected $background_color;
+
+  /**
+   * The foreground color.
+   *
+   * @var string
+   */
+  protected $foreground_color;
+
+  /**
+   * The label color.
+   *
+   * @var string
+   */
+  protected $label_color;
 
   /**
    * A brief description of this passbook type.
@@ -107,6 +131,27 @@ class PassbookType extends ConfigEntityBundleBase implements PassbookTypeInterfa
    */
   public function passType() {
     return $this->pass_type;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function backgroundColor() {
+    return $this->background_color;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function foregroundColor() {
+    return $this->foreground_color;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function labelColor() {
+    return $this->label_color;
   }
 
   /**
