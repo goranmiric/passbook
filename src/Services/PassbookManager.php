@@ -129,8 +129,13 @@ class PassbookManager {
             $imageStyle = 'passbook_' . $definition->getName() . $key;
             $imageContext = $definition->getName() . $context;
 
-            $imageUri = ImageStyle::load($imageStyle)->buildUri($file->getFileUri());
-            $realPath = $this->fileSystem->realpath($imageUri);
+            // Get image style uri.
+            $imageStyle = ImageStyle::load($imageStyle);
+            $styleUri = $imageStyle->buildUri($file->getFileUri());
+
+            // Create the image.
+            $imageStyle->createDerivative($file->getFileUri(), $styleUri);
+            $realPath = $this->fileSystem->realpath($styleUri);
 
             $image = new Image($realPath, $imageContext);
             $pass->addImage($image);
@@ -171,7 +176,7 @@ class PassbookManager {
     $factory->setOutputPath($this->fileSystem->realpath($this->config['output_path']));
     $out = $factory->package($pass);
 
-    return $this->config['output_path'] . $out->getFilename() . 'xxxx';
+    return $this->config['output_path'] . $out->getFilename();
   }
 
   /**

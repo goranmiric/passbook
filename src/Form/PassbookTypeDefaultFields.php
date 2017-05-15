@@ -80,7 +80,7 @@ class PassbookTypeDefaultFields {
           'barcode' => [
             'label' => $this->t('Barcode'),
             'settings' => [
-              'callback' => 'TYPE_AZTEC'
+              'callback' => 'TYPE_PDF_417'
             ],
           ],
         ];
