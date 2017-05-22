@@ -83,8 +83,23 @@ class PassbookAccessControlHandler extends EntityAccessControlHandler implements
       return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($passbook);
     }
 
-    // Evaluate grants.
-    return $this->grantStorage->access($passbook, $operation, $account);
+    // Grants only support these operations.
+    if (!in_array($operation, ['view', 'edit', 'delete'])) {
+      return AccessResult::neutral();
+    }
+    // If no module implements the hook or the entity does not have an id
+    // there is no point in querying the database for access grants.
+    if (!$this->moduleHandler->getImplementations('passbook_grants') || !$passbook->id()) {
+      // Return the equivalent of the default grant, defined by
+      // self::writeDefault().
+      if ($operation === 'view') {
+        return AccessResult::allowedIf($passbook->isPublished())->addCacheableDependency($passbook);
+      }
+      else {
+        return AccessResult::forbidden();
+      }
+    }
+
   }
 
   /**

@@ -4,13 +4,9 @@ Passbook module provides integration to Passbook API.
 
 Installation
 --------------------------------------------------------------------------------
-  - Download "eymengunay/php-passbook" library from github (inside or outside of drupal root):
-    git clone git@github.com:eymengunay/php-passbook.git
-  
-  - Execute "composer install" inside passbook directory
-
-  - Add "passbook_dir" path variable to settings.php, e.g.:
-    $settings['passbook_dir'] = DRUPAL_ROOT . '/../passbook';
+  - cd $DRUPAL
+  - composer update
+  - composer require "eo/passbook:dev-master"
     
 Configuration
 --------------------------------------------------------------------------------

@@ -1,0 +1,63 @@
+passbook_webservice.push_notifications:
+  path: '/passbook-webservice/v1/devices/{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}'
+  defaults:
+    _controller: '\Drupal\passbook_webservice\Controller\PassbookWebserviceController::pushNotifications'
+  methods: [POST]
+  requirements:
+    _access: 'TRUE'
+
+#
+#adyax_ws.get:
+#  path: '/adyax_ws/get'
+#  defaults:
+#    _controller: '\Drupal\adyax_ws\Controller\AdyaxWsController::getAction'
+#  methods: [GET]
+#  requirements:
+#    _access: 'TRUE'
+#
+#adyax_ws.push_notifications:
+#  path: '/adyax_ws/post'
+#  defaults:
+#    _controller: '\Drupal\adyax_ws\Controller\AdyaxWsController::postAction'
+#  methods: [POST]
+#  requirements:
+#    _access: 'TRUE'
+#
+#adyax_ws.put:
+#  path: '/adyax_ws/put'
+#  defaults:
+#    _controller: '\Drupal\adyax_ws\Controller\AdyaxWsController::putAction'
+#  methods: [PUT]
+#  requirements:
+#    _access: 'TRUE'
+#
+#adyax_ws.delete:
+#  path: '/adyax_ws/delete'
+#  defaults:
+#    _controller: '\Drupal\adyax_ws\Controller\AdyaxWsController::deleteAction'
+#  methods: [DELETE]
+#  requirements:
+#    _access: 'TRUE'
+#
+#
+#
+#passbook_webservice.push:
+#  path: 'passbook-webservice/v1/devices/{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}/{serialNumber}'
+#  defaults:
+#    _controller: '\Drupal\passbook_webservice\Controller\PassbookWebserviceController::push'
+#  requirements:
+#    _access: 'TRUE'
+#
+#passbook_webservice.get:
+#  path: 'passbook-webservice/v1/devices/{deviceLibraryIdentifier}/registrations/{passTypeIdentifier}'
+#  defaults:
+#    _controller: '\Drupal\passbook_webservice\Controller\PassbookWebserviceController::get'
+#  requirements:
+#    _access: 'TRUE'
+#
+#passbook_webservice.latest:
+#  path: 'passbook-webservice/v1/passes/{passTypeIdentifier}/{serialNumber}'
+#  defaults:
+#    _controller: '\Drupal\passbook_webservice\Controller\PassbookWebserviceController::LATEST'
+#  requirements:
+#    _access: 'TRUE'

@@ -1,0 +1,4 @@
+services:
+  passbook_webservice.manager:
+    class: Drupal\passbook_webservice\Services\WebserviceManager
+    arguments: ['@database', '@datetime.time']

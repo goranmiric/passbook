@@ -1,0 +1,5 @@
+name: 'Passbook Web service'
+description: 'Passbook REST web service.'
+type: module
+core: 8.x
+package: Passbook

@@ -1,0 +1,116 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the passbook_webservice module.
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function passbook_webservice_schema() {
+
+  $schema['passbook_webservice_log'] = [
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'log' => [
+        'type' => 'text',
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['passbook_webservice_passes'] = [
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'pass_type_identifier' => [
+        'type' => 'varchar_ascii',
+        'length' => 250,
+        'not null' => TRUE,
+      ],
+      'serial_number' => [
+        'type' => 'varchar_ascii',
+        'length' => 250,
+        'not null' => TRUE,
+      ],
+      'authentication_token' => [
+        'type' => 'varchar_ascii',
+        'length' => 250,
+        'not null' => TRUE,
+      ],
+      'data' => [
+        'type' => 'blob',
+        'not null' => TRUE,
+        'size' => 'big',
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'updated' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  $schema['passbook_webservice_registrations'] = [
+    'fields' => [
+      'id' => [
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ],
+      'pass_id' => [
+        'type' => 'int',
+        'length' => 15,
+        'not null' => TRUE,
+      ],
+      'device_library_identifier' => [
+        'type' => 'varchar_ascii',
+        'length' => 250,
+        'not null' => TRUE,
+      ],
+      'push_token' => [
+        'type' => 'varchar_ascii',
+        'length' => 250,
+        'not null' => TRUE,
+      ],
+      'created' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+      'updated' => [
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+        'default' => 0,
+      ],
+    ],
+    'primary key' => ['id'],
+  ];
+
+  return $schema;
+}

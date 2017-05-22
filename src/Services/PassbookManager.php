@@ -6,7 +6,6 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\File\FileSystem;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\Core\Site\Settings;
 use Drupal\image\Entity\ImageStyle;
 use Drupal\passbook\Entity\PassbookType;
 use Passbook\Pass\Image;
@@ -48,8 +47,6 @@ class PassbookManager {
    *   The configuration factory.
    */
   public function __construct(ConfigFactoryInterface $configFactory, EntityTypeManagerInterface $entityTypeManager, FileSystem $fileSystem) {
-    $this->checkLibrary();
-
     $this->config = $configFactory->get('passbook.settings')->get();
     $this->entityTypeManager = $entityTypeManager;
     $this->fileSystem = $fileSystem;
@@ -71,9 +68,6 @@ class PassbookManager {
     $passTypeClass = '\Passbook\Type\\' . ucfirst($entity->getPassType());
     $pass = new $passTypeClass($entity->uuid(), $entity->label());
 
-    $pass->setFormatVersion(1);
-    // $pass->setAuthenticationToken('2ac79497345ae6c9c59b67af3dd4b818');
-    // $pass->setWebServiceURL('https://api.passdock.com');
     $pass->setLogoText($bundle->label());
     $pass->setBackgroundColor($bundle->backgroundColor());
     $pass->setForegroundColor($bundle->foregroundColor());
@@ -155,8 +149,17 @@ class PassbookManager {
    *   Path to the file.
    */
   public function create($pass) {
+    // Set api version.
+    $pass->setFormatVersion(1);
+
     // Add icon image to the pass object.
     $this->setIcon($pass);
+
+    // Set webservice.
+    if ($this->config['web_service_url']) {
+      $pass->setAuthenticationToken(bin2hex(random_bytes(16)));
+      $pass->setWebServiceURL($this->config['web_service_url']);
+    }
 
     $factory = new PassFactory(
       $this->config['pass_type_identifier'],
@@ -199,19 +202,6 @@ class PassbookManager {
 
     $icon2x = new Image($this->config['icon2x_file'], 'icon@2x');
     $pass->addImage($icon2x);
-  }
-
-  /**
-   * Check if the Passbook library can be found.
-   *
-   * Fallback for when the library was not found via Composer.
-   */
-  protected function checkLibrary() {
-    if (!class_exists('Structure')) {
-      $dir = Settings::get('passbook_dir');
-      $loader = require_once $dir . '/vendor/autoload.php';
-      $loader->add('Passbook\\', 'src/Passbook');
-    }
   }
 
 }

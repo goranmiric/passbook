@@ -102,6 +102,12 @@ class PassbookSettingsForm extends ConfigFormBase {
       '#description' => $this->t('Path to icon.'),
     ];
 
+    $form['web_service_url'] = [
+      '#type' => 'url',
+      '#title' => $this->t('Web Service Url'),
+      '#default_value' => $config->get('web_service_url'),
+      '#description' => $this->t('The URL to your web service, as specified in the pass..'),
+    ];
 
     return parent::buildForm($form, $form_state);
   }
@@ -144,6 +150,7 @@ class PassbookSettingsForm extends ConfigFormBase {
       ->set('output_path', $form_state->getValue('output_path'))
       ->set('icon_file', $form_state->getValue('icon_file'))
       ->set('icon2x_file', $form_state->getValue('icon2x_file'))
+      ->set('web_service_url', trim($form_state->getValue('web_service_url')))
       ->save();
 
     parent::submitForm($form, $form_state);
