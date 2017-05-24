@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: passbook_logo_2x
+label: 'Passbook Logo@2x'
+effects:
+  fe5ada30-0ef9-48d9-b312-aaee770a978f:
+    uuid: fe5ada30-0ef9-48d9-b312-aaee770a978f
+    id: image_scale
+    weight: 1
+    data:
+      width: 320
+      height: 100
+      upscale: false

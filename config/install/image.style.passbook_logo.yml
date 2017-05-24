@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies: {  }
+name: passbook_logo
+label: 'Passbook Logo'
+effects:
+  b26d101d-b11b-4f23-bc02-ae4dad2bbf9c:
+    uuid: b26d101d-b11b-4f23-bc02-ae4dad2bbf9c
+    id: image_scale
+    weight: 1
+    data:
+      width: 160
+      height: 50
+      upscale: false

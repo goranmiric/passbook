@@ -76,10 +76,6 @@ class PassbookManager {
     // Create pass structure.
     $structure = new Structure();
 
-    // Set logo.
-    $logo = new Image($this->config['icon_file'], 'logo');
-    $pass->addImage($logo);
-
     foreach ($fields as $field) {
       $value = $entity->$field->getValue();
       $value = reset($value);

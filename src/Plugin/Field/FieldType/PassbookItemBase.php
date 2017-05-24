@@ -27,6 +27,7 @@ class PassbookItemBase extends FieldItemBase {
   public function fieldSettingsForm(array $form, FormStateInterface $form_state) {
     $element = [];
     $settings = $this->getSettings();
+    $passType = \Drupal::entityTypeManager()->getStorage('passbook_type')->load($form['#entity']->bundle());
 
     $element['callback'] = [
       '#title' => $this->t('Passbook field type'),
@@ -43,6 +44,22 @@ class PassbookItemBase extends FieldItemBase {
       '#description' => $this->t('Select passbook field type.'),
       '#required' => TRUE,
     ];
+
+    $element['layout'] = [
+      'title' => [
+        '#type' => 'html_tag',
+        '#tag' => 'p',
+        '#value' => '<b>' . $this->t('Passbook layout:') . '</b>',
+      ],
+      'image' => [
+        '#type' => 'html_tag',
+        '#tag' => 'img',
+        '#attributes' => [
+          'src' => '/' . drupal_get_path('module', 'passbook') . '/images/' . $passType->passType() . '.png',
+        ],
+      ],
+    ];
+
 
     return $element;
   }
