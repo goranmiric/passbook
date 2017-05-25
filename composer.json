@@ -1,0 +1,14 @@
+{
+    "name": "drupal/passbook",
+    "description": "Passbook API.",
+    "type": "drupal-module",
+    "authors": [
+        {
+            "name": "Goran Miric",
+            "homepage": "https://www.drupal.org/u/g_miric"
+        }
+    ],
+    "require": {
+        "eo/passbook": "dev-master"
+    }
+}
