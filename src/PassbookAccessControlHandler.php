@@ -53,7 +53,7 @@ class PassbookAccessControlHandler extends EntityAccessControlHandler implements
   public function createAccess($entity_bundle = NULL, AccountInterface $account = NULL, array $context = [], $return_as_object = FALSE) {
     $account = $this->prepareUser($account);
 
-    if ($account->hasPermission('bypass passbook access')) {
+    if ($account->hasPermission('bypass passbook access') || $account->hasPermission('create ' . $entity_bundle . ' passbook')) {
       $result = AccessResult::allowed()->cachePerPermissions();
       return $return_as_object ? $result : $result->isAllowed();
     }
@@ -68,38 +68,42 @@ class PassbookAccessControlHandler extends EntityAccessControlHandler implements
 
   /**
    * {@inheritdoc}
-   *
-   * TODO: finish this.
    */
   protected function checkAccess(EntityInterface $passbook, $operation, AccountInterface $account) {
     /** @var \Drupal\passbook\Entity\PassbookInterface $passbook */
 
-    // Fetch information from the entity object if possible.
-    $status = $passbook->isPublished();
-    $uid = $passbook->getOwnerId();
-
-    // Check if authors can view their own unpublished content.
-    if ($operation === 'view' && !$status && $account->hasPermission('view own unpublished content') && $account->isAuthenticated() && $account->id() == $uid) {
-      return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($passbook);
-    }
-
     // Grants only support these operations.
-    if (!in_array($operation, ['view', 'edit', 'delete'])) {
+    if (!in_array($operation, ['view', 'update', 'delete'])) {
       return AccessResult::neutral();
     }
-    // If no module implements the hook or the entity does not have an id
-    // there is no point in querying the database for access grants.
-    if (!$this->moduleHandler->getImplementations('passbook_grants') || !$passbook->id()) {
-      // Return the equivalent of the default grant, defined by
-      // self::writeDefault().
-      if ($operation === 'view') {
-        return AccessResult::allowedIf($passbook->isPublished())->addCacheableDependency($passbook);
-      }
-      else {
-        return AccessResult::forbidden();
-      }
+
+    // Fetch information from the entity object if possible.
+    $status = $passbook->isPublished();
+    $bundle = $passbook->bundle();
+    $uid = $passbook->getOwnerId();
+
+    switch ($operation) {
+      case 'view':
+        if (!$status && $account->hasPermission('view own unpublished content') && $account->isAuthenticated() && $account->id() == $uid) {
+          return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($passbook);
+        }
+        return AccessResult::allowedIfHasPermission($account,'access passbook')->cachePerPermissions();
+        break;
+
+      case 'update':
+        if ($account->hasPermission('edit any ' . $bundle . ' passbook') || ($account->hasPermission('edit own ' . $bundle . ' passbook') && $account->id() == $uid)) {
+          return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($passbook);
+        }
+        break;
+
+      case 'delete':
+        if ($account->hasPermission('delete any ' . $bundle . ' passbook') || ($account->hasPermission('delete own ' . $bundle . ' passbook') && $account->id() == $uid)) {
+          return AccessResult::allowed()->cachePerPermissions()->cachePerUser()->addCacheableDependency($passbook);
+        }
+        break;
     }
 
+    return AccessResult::forbidden();
   }
 
   /**
