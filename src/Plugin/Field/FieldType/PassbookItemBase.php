@@ -6,6 +6,8 @@ use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\TypedData\DataDefinition;
+use Drupal\Core\Url;
+use Drupal\Core\Link;
 
 /**
  * Base class for 'text' configurable field types.
@@ -28,6 +30,7 @@ class PassbookItemBase extends FieldItemBase {
     $element = [];
     $settings = $this->getSettings();
     $passType = \Drupal::entityTypeManager()->getStorage('passbook_type')->load($form['#entity']->bundle());
+    $descriptionLink = Link::fromTextAndUrl(t('link'), Url::fromUri('https://developer.apple.com/library/content/documentation/UserExperience/Conceptual/PassKit_PG/Creating.html'));
 
     $element['callback'] = [
       '#title' => $this->t('Passbook field type'),
@@ -41,7 +44,7 @@ class PassbookItemBase extends FieldItemBase {
         'addBackField' => $this->t('Back'),
       ],
       '#default_value' => $settings['callback'],
-      '#description' => $this->t('Select passbook field type.'),
+      '#description' => $this->t('Select passbook field type. See the image below for the field position, or visit @link for more details.', ['@link' => $descriptionLink->toString()]),
       '#required' => TRUE,
     ];
 
