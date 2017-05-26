@@ -13,51 +13,27 @@ Configuration
   - Go to the nodule config page "/admin/config/passbook/passbook-settings",
    and configure the Passbook Settings.
    
+   - P12 File Path
+     - To register a pass type identifier, do the following:
+       - In <a href="https://developer.apple.com/account/#/welcome">Certificates, Identifiers & Profiles</a>, select "Certificates, Identifiers & Profiles".
+       - Then under "Identifiers" select "Pass Type IDs".
+       - Then click (+) and create a new one (Enter the description and pass type identifier, and click Submit).
+       - Then under "Certificates" click "Production".
+       - Then click (+) and select "Pass Type ID Certificate", and click "Continue".
+       - For "Pass Type ID" select previously created Pass Type ID, and click "Continue".
+       - Follow instruction from the page and create a CSR file and click "Continue".
+       - Select previously created ".certSigningRequest" file and click "Continue".
+       - Then click "Download" to download ".cer" file.
+     - Once you have downloaded the Apple iPhone certificate from Apple, export it to the P12 certificate format.
+       - On your Mac go to the folder Applications > Utilities and open Keychain Access.
+       - If you have not already added the certificate to Keychain, select File > Import. Then navigate to the certificate file (the .cer file) you obtained from Apple.
+       - Select the Keys category in Keychain Access.
+       - Select the private key associated with your Pass Type ID Certificate. The private key is identified by the Pass Type ID Developer: public certificate that is paired with it.
+       - Select File > Export Items.
+       - Save your key in the Personal Information Exchange (.p12) file format.
+       - You will be prompted to create a password that is used when you attempt to import this key on another computer.
+       
+       
 API documentation
 --------------------------------------------------------------------------------
   - http://eymengunay.github.io/php-passbook/api/
-   
-Usage example
---------------------------------------------------------------------------------
-```php
-<?php
-use Passbook\Pass\Field;
-use Passbook\Pass\Barcode;
-use Passbook\Pass\Structure;
-use Passbook\Type\EventTicket;
-
-// Initialize service.
-$passbook = \Drupal::service('passbook.manager');
-
-// Create an event ticket.
-$pass = new EventTicket("1254785", "The Beat Goes On");
-$pass->setBackgroundColor('rgb(60, 65, 76)');
-$pass->setLogoText('Apple Inc.');
-
-// Create pass structure.
-$structure = new Structure();
-
-// Add primary field.
-$primary = new Field('event', 'The Beat Goes On');
-$primary->setLabel('Event');
-$structure->addPrimaryField($primary);
-
-// Add secondary field.
-$secondary = new Field('location', 'Moscone West');
-$secondary->setLabel('Location');
-$structure->addSecondaryField($secondary);
-
-// Add auxiliary field.
-$auxiliary = new Field('datetime', '2013-04-15 @10:25');
-$auxiliary->setLabel('Date & Time');
-$structure->addAuxiliaryField($auxiliary);
-
-// Set pass structure.
-$pass->setStructure($structure);
-
-// Add barcode.
-$barcode = new Barcode(Barcode::TYPE_QR, 'barcodeMessage');
-$pass->setBarcode($barcode);
-
-$passbook->create($pass);
-````
