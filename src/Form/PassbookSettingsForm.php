@@ -196,6 +196,22 @@ class PassbookSettingsForm extends ConfigFormBase {
       '#items' => $this->addHtmlItems($items),
     ];
 
+    // Pass web service.
+    $form['docs']['web_service'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Web service.'),
+    ];
+
+    $items = [
+      'More details about passbook Web Service you can find <a href="https://developer.apple.com/library/content/documentation/PassKit/Reference/PassKit_WebService/WebService.html" target="_blank">here</a>.',
+      'If you are using <b>Passbook Web service</b> provided by passbook module path to webservice if <b>[SITE_URL]/passbook-webservice</b>.',
+    ];
+
+    $form['docs']['web_service']['details'] = [
+      '#theme' => 'item_list',
+      '#items' => $this->addHtmlItems($items),
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
