@@ -24,7 +24,7 @@ Configuration
        - Follow instruction from the page and create a CSR file and click "Continue".
        - Select previously created ".certSigningRequest" file and click "Continue".
        - Then click "Download" to download ".cer" file.
-     - Once you have downloaded the Apple iPhone certificate from Apple, export it to the P12 certificate format.
+     - Once you have downloaded the Pass Type ID Certificate from Apple, export it to the P12 certificate format.
        - On your Mac go to the folder Applications > Utilities and open Keychain Access.
        - If you have not already added the certificate to Keychain, select File > Import. Then navigate to the certificate file (the .cer file) you obtained from Apple.
        - Select the Keys category in Keychain Access.
