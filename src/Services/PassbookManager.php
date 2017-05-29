@@ -65,6 +65,10 @@ class PassbookManager {
     $fields = $entity->getPassbookFields();
     $bundle = PassbookType::load($entity->bundle());
 
+    // Get passbook entity view settings.
+    $viewStorage = $this->entityTypeManager->getStorage('entity_view_display');
+    $viewSettings = $viewStorage->load('passbook.' . $entity->bundle() . '.default')->get('content');
+
     $passTypeClass = '\Passbook\Type\\' . ucfirst($entity->getPassType());
     $pass = new $passTypeClass($entity->uuid(), $entity->label());
 
@@ -79,23 +83,37 @@ class PassbookManager {
     foreach ($fields as $field) {
       $value = $entity->$field->getValue();
       $value = reset($value);
-      // Skip if there is no value set.
-      if (!$value) {
+      // Skip if field is not added to default view mode
+      // or if there is no value for this field.
+      if (!isset($viewSettings[$field]) || !$value) {
         continue;
       }
 
       $definition = $entity->$field->getFieldDefinition();
       switch ($definition->getType()) {
         case 'passbook_text':
-        case 'passbook_date':
           $data = new Field($definition->getName(), $value['value']);
-          $data->setLabel($definition->getLabel());
+          if ($viewSettings[$field]['label'] != 'hidden') {
+            $data->setLabel($definition->getLabel());
+          }
+          $callback = $definition->getSetting('callback');
+          $structure->$callback($data);
+          break;
+
+        case 'passbook_date':
+          $date = new \DateTime($value['value']);
+          $format = $viewSettings[$field]['settings']['date_format'];
+
+          $data = new Field($definition->getName(), $date->format($format));
+          if ($viewSettings[$field]['label'] != 'hidden') {
+            $data->setLabel($definition->getLabel());
+          }
           $callback = $definition->getSetting('callback');
           $structure->$callback($data);
 
           if ($definition->getName() == 'expiration_date') {
             // TODO: Move this to the field config.
-            $pass->setExpirationDate( new \DateTime($value['value']));
+            $pass->setExpirationDate($date);
           }
           break;
 
@@ -152,7 +170,7 @@ class PassbookManager {
     $this->setIcon($pass);
 
     // Set webservice.
-    if ($this->config['web_service_url']) {
+    if (isset($this->config['web_service_url'])) {
       $pass->setAuthenticationToken(bin2hex(random_bytes(16)));
       $pass->setWebServiceURL($this->config['web_service_url']);
     }

@@ -4,6 +4,7 @@ namespace Drupal\passbook\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Form\FormStateInterface;
 
 /**
  * Plugin implementation of the 'passbook_date_default' formatter.
@@ -17,6 +18,37 @@ use Drupal\Core\Field\FieldItemListInterface;
  * )
  */
 class PassbookDateDefaultFormatter extends FormatterBase {
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'date_format' => 'm/d/Y',
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    $element['date_format'] = [
+      '#title' => t('Date format'),
+      '#type' => 'textfield',
+      '#default_value' => $this->getSetting('date_format'),
+    ];
+
+    return $element;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $format = $this->getSetting('date_format');
+
+    return [$format];
+  }
 
   /**
    * {@inheritdoc}
