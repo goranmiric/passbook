@@ -1,7 +1,8 @@
 {
-    "name": "drupal/passbook",
-    "description": "Passbook API.",
+    "name": "gorrax/passbook",
     "type": "drupal-module",
+    "description": "Passbook API.",
+    "keywords": ["passbook"],
     "authors": [
         {
             "name": "Goran Miric",
