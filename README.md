@@ -1,18 +1,27 @@
 Passbook
 ================================================================================
-Passbook module provides integration to Passbook API.
+Drupal 8 passbook integration.
 
 Installation
 --------------------------------------------------------------------------------
   - cd $DRUPAL
   - composer update
-  - composer require "eo/passbook:dev-master"
-  
+  - composer require "composer require gorrax/passbook"
     
 Configuration
 --------------------------------------------------------------------------------
-  - Go to the nodule config page "/admin/config/passbook/passbook-settings", and configure the Passbook Settings.
+  - Enable "Passbook" module.
+  - Go to the module config page "/admin/config/passbook/passbook-settings", and configure the Passbook Settings.
   - All the needed information you will find at the same page under "Documentation" section.
+  
+How to use it
+--------------------------------------------------------------------------------
+  - Go to "/admin/structure/passbook" and create a new passbook type entity.
+  - Then add fields. You should use "Passbook" fields and and "Image: Logo" and "Image: Thumbnail" fields.
+  - When you are adding passbook fields, on field setting page you will see "Passbook layout" for the passbook type,
+  so you know where that field will appear.
+  - Then you need to configure "Display" (Default is user for passbook package) for the passbook type.
+  - If you hide label it will not be added to passbook package, etc.
   
 API documentation
 --------------------------------------------------------------------------------
