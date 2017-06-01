@@ -7,6 +7,7 @@ Installation
   - cd $DRUPAL
   - composer update
   - composer require "eo/passbook:dev-master"
+  
     
 Configuration
 --------------------------------------------------------------------------------
